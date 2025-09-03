@@ -1,0 +1,94 @@
+{
+    "extends": [
+      "eslint:recommended",
+      "plugin:node/recommended",
+      "plugin:prettier/recommended"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2022
+    },
+    "rules": {
+      // "id-blacklist": ["error", ["gen", "reg", "Reg", "Gen"]],
+      // "capitalized-comments":["error" , {"ignoreConsecutiveComments": true}],
+      "camelcase": "error",
+      "eqeqeq": "error",
+      "global-require": "error",
+      "node/no-unpublished-require": "off",
+      // "lines-around-comment":"error",
+      "no-constant-condition": "error",
+      // "init-declarations":"error",
+      // "no-useless-disable": "error",
+      "no-multiple-empty-lines": "warn",
+      "no-trailing-spaces": "warn",
+      "no-use-before-define": "error",
+      // "no-extra-parens":"error",
+      // "no-implicit-coercion":"error",
+      "no-useless-concat": "error",
+      // "no-magic-numbers": ["error", { "ignoreArrayIndexes": true, "ignore": [0, 1, 2] }],
+      "no-restricted-syntax": [
+        "error",
+        "ForInStatement",
+        "LabeledStatement",
+        "WithStatement"
+      ],
+      "no-unreachable": "error",
+      "no-shadow": "error",
+      "no-param-reassign": ["error", { "props": true }],
+      "no-process-env": "off",
+      "no-process-exit": "error",
+      "prefer-const": "error",
+      "semi": "error",
+      "spaced-comment": "error",
+      "vars-on-top": "error",
+      "yoda": "error",
+      "max-params": ["error", { "max": 5 }], // Use obj destructuring for more than 5
+      "no-console": 0,
+      "no-self-assign": "warn",
+      "no-self-compare": "warn",
+      // Slowly we will reduced the complexity to 10
+      "complexity": ["error", { "max": 40 }],
+      "indent": ["error", 2, { "SwitchCase": 1 }],
+      "no-dupe-keys": "error",
+      "no-invalid-regexp": "error",
+      "no-undef": "error",
+      "no-unused-vars": [
+        "error",
+        { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
+      ],
+      "no-return-assign": "error",
+      "no-redeclare": "error",
+      "no-empty": "error",
+      "no-await-in-loop": "off",
+      "node/exports-style": ["error", "module.exports"],
+      "node/file-extension-in-import": ["error", "always"],
+      "node/prefer-global/buffer": ["error", "always"],
+      "node/prefer-global/console": ["error", "always"],
+      "node/prefer-global/process": ["error", "always"],
+      "node/prefer-global/url-search-params": ["error", "always"],
+      "node/prefer-global/url": ["error", "always"],
+      "node/prefer-promises/dns": "error",
+      "node/prefer-promises/fs": "error"
+    },
+    "globals": {
+      "gauge": "readonly",
+      "step": "readonly",
+      "document": "readonly",
+      "window": "readonly",
+      "XPathResult": "readonly",
+      "chrome": "readonly",
+      "performance": "readonly"
+    },
+    "overrides": [
+      {
+        "files": ["*.js"],
+        "rules": {
+          "indent": "off",
+          "prettier/prettier": [
+            "error",
+            { "endOfLine": "auto", "useTabs": false, "tabWidth": 2 }
+          ]
+        }
+      }
+    ]
+  }
+  

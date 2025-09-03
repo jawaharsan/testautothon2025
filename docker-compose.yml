@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  autothon:
+    build: .
+    container_name: autothon-framework
+    volumes:
+      - .:/usr/src/app
+    environment:
+      BASE_URL: ${BASE_URL}
+      API_BASE_URL: ${API_BASE_URL}
+      USERNAME: ${USERNAME}
+      PASSWORD: ${PASSWORD}
+      APP_PATH: /usr/src/app/appium/apps/ApiDemos-debug.apk
+    tty: true
