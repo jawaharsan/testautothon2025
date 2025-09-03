@@ -1,5 +1,5 @@
-# Test Autothan 2025
-For the Test Autothan 2025 contest
+# Test Autothon 2025
+For the Test Autothon 2025 contest
 
 ### Prereqs
 - Node.js 18+
