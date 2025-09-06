@@ -8,7 +8,7 @@ export class LoginPage extends BasePage {
     this.submit = page.locator('#login-button');
   }
 
-  async goto() { await super.goto('/login'); }
+  async goto() { await super.goto('/'); }
   async login(user, pass) {
     await this.username.fill(user);
     await this.password.fill(pass);

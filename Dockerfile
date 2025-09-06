@@ -1,33 +1,24 @@
-# Use Node.js LTS
 FROM node:20-bullseye
 
-# Set working directory
 WORKDIR /usr/src/app
 
-# Copy package files
+# Only package files first to leverage Docker cache
 COPY package*.json ./
+RUN npm ci
 
-# Install dependencies
-RUN npm install
-
-# Install Playwright browsers
+# Install browsers once (cached layer)
 RUN npx playwright install --with-deps
 
-# Install Appium globally
-RUN npm install -g appium
+# Allure CLI (optional, global)
+RUN npm install -g allure-commandline
 
-# Install Allure CLI globally
-RUN npm install -g allure-commandline --save-dev
-
-# Copy the rest of the project
+# Now bring in the rest
 COPY . .
 
-# Set default environment variables
 ENV BASE_URL=https://www.saucedemo.com
 ENV API_BASE_URL=https://reqres.in/api
 ENV USERNAME=standard_user
 ENV PASSWORD=secret_sauce
 ENV APP_PATH=/usr/src/app/appium/apps/ApiDemos-debug.apk
 
-# Default command (keep container interactive)
-CMD ["bash"]
+CMD ["bash"]  # dev default; Compose will override with commands
