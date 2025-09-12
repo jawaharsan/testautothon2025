@@ -1,4 +1,4 @@
-import { config as androidCaps } from './capabilities.android.emu.js';
+import { androidCaps } from './capabilities.android.emu.js';
 
 export const config = {
   runner: 'local',
