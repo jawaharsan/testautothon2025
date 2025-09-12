@@ -16,11 +16,11 @@ export const test = base.extend({
   // Reusable login flow
   auth: async ({ page }, use) => {
     await use({
-      loginAs: async (username, password) => {
+      loginAs: async (userType) => {
         await step('Login as user', async () => {
           const lp = new LoginPage(page);
           await lp.goto();
-          await lp.login(username, password);
+          await lp.login(userType);
         });
       }
     });
