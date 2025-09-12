@@ -1,12 +1,19 @@
+// playwright.config.js
 import { defineConfig, devices } from '@playwright/test';
+
+const isCI = !!process.env.CI;
 
 export default defineConfig({
   testDir: './tests',
   timeout: 30_000,
   fullyParallel: true,
   expect: { timeout: 5_000 },
-  reporter: [['html'], ['allure-playwright']],
-  outputDir: 'reports/allure-results', // Playwright Allure output
+  forbidOnly: isCI,                 // harden CI runs
+  fullyParallel: true,              // let PW shard work per file
+  reporter: [
+    ['html', { open: 'never' }],    // keep HTML report consistently
+    ['allure-playwright', { outputFolder: 'reports/allure-results', detail: true }]
+  ],
   use: {
     baseURL: process.env.BASE_URL || 'https://example.org',
     headless: true,
@@ -19,6 +26,6 @@ export default defineConfig({
     // { name: 'firefox', use: { ...devices['Desktop Firefox'] } },
     // { name: 'webkit', use: { ...devices['Desktop Safari'] } }
   ],
-  retries: 0,
-  workers: process.env.CI ? 4 : 2,
+  retries: isCI ? 2 : 1,            // a bit more tolerance in CI
+  workers: isCI ? (process.env.PW_WORKERS || 4) : 2
 });

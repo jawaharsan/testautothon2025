@@ -1,15 +1,41 @@
 version: '3.8'
-
 services:
-  autothon:
+  tests:
     build: .
     container_name: autothon-framework
+    env_file: .env
+    shm_size: 1g              # prevent Chrome OOM/crashes
+    ipc: host
     volumes:
       - .:/usr/src/app
-    environment:
-      BASE_URL: ${BASE_URL}
-      API_BASE_URL: ${API_BASE_URL}
-      USERNAME: ${USERNAME}
-      PASSWORD: ${PASSWORD}
-      APP_PATH: /usr/src/app/appium/apps/ApiDemos-debug.apk
+      - node_modules:/usr/src/app/node_modules
+      - pw-cache:/root/.cache/ms-playwright
     tty: true
+    # Dev command (interactive); for CI, see the "ci" profile below
+    command: bash -lc "npm ci && npx playwright install --with-deps && npm run test:pw && npm run allure:generate"
+
+  # Optional: run just API or WEB via profiles
+  web:
+    extends: tests
+    command: bash -lc "npm ci && npm run test:web && npm run allure:generate"
+    profiles: ["web"]
+
+  api:
+    extends: tests
+    command: bash -lc "npm ci && npm run test:api && npm run allure:generate"
+    profiles: ["api"]
+
+  # Example CI profile running all tests; no bind mount for hermeticity
+  ci:
+    build: .
+    env_file: .env
+    shm_size: 1g
+    ipc: host
+    volumes:
+      - pw-cache:/root/.cache/ms-playwright
+    command: bash -lc "npm ci && npx playwright install --with-deps && npm run test:pw && npm run allure:generate"
+    profiles: ["ci"]
+
+volumes:
+  node_modules:
+  pw-cache:
