@@ -8,12 +8,13 @@ export const users = {
       password: 'secret_sauce'
     },
     invalidLogin: {
-      email: "foo@bar.com",
+      username: "foo@bar.com",
       password: "wrong" 
     },
     valid: { 
       email: "eve.holt@reqres.in",
-      password: "cityslicka" },
+      password: "cityslicka" 
+    },
     invalid: {
       email: "foo@bar.com",
       password: "wrong" 

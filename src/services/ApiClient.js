@@ -1,10 +1,16 @@
 import { Env } from '../config/env.js';
 
 export class ApiClient {
-  /** @param {import('@playwright/test').APIRequestContext} request */
+  /** @param {import('@playwright/test').BrowserContext.request} request */
   constructor(request, baseUrl = Env.apiBaseUrl) {
     this.request = request;
     this.baseUrl = baseUrl.replace(/\/$/, '');
+    this.header = {
+        'headers': {
+        'Content-Type': 'application/json',
+        'x-api-key': Env.apiKey
+      }
+    }
   }
 
   async get(path, opts = {}) {

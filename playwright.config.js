@@ -1,14 +1,14 @@
 // playwright.config.js
 import { defineConfig, devices } from '@playwright/test';
+import { Env } from './src/config/env'
 
-const isCI = !!process.env.CI;
+const isCI = !!Env.ci;
 
 export default defineConfig({
   testDir: './tests',
   timeout: 30_000,
   fullyParallel: true,
   expect: { timeout: 5_000 },
-  forbidOnly: isCI,                 // harden CI runs
   fullyParallel: true,              // let PW shard work per file
   reporter: [
     ['html', { open: 'never' }],    // keep HTML report consistently
@@ -27,5 +27,5 @@ export default defineConfig({
     // { name: 'webkit', use: { ...devices['Desktop Safari'] } }
   ],
   retries: isCI ? 2 : 1,            // a bit more tolerance in CI
-  workers: isCI ? (process.env.PW_WORKERS || 4) : 2
+  workers: isCI ? (Env.workers || 8) : 2
 });

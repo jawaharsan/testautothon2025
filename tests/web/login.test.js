@@ -23,7 +23,7 @@ test.describe('Login @login', async () => {
   });
   test('valid invalid user not able to login @invalid_login', async ({ page, auth, dashboardPage }) => {
     await test.step('Login as a standard user', async () => {
-      await auth.loginAs('invalid');
+      await auth.loginAs('invalidLogin');
     });
     await test.step('Verify if the user is logged in', async () => {
       await dashboardPage.assertInvalidUser(expect);
