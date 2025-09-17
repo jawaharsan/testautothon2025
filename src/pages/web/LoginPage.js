@@ -1,17 +1,20 @@
-import { BasePage } from './BasePage.js';
+import { BasePage } from '../web/BasePage.js';
+import { loginLocators } from '../../locators/web/login.locators.js';
+import { users } from '../../data/users.data.js';
 
 export class LoginPage extends BasePage {
   constructor(page) {
     super(page);
-    this.username = page.locator('#user-name');
-    this.password = page.locator('#password');
-    this.submit = page.locator('#login-button');
   }
 
-  async goto() { await super.goto('/login'); }
-  async login(user, pass) {
-    await this.username.fill(user);
-    await this.password.fill(pass);
-    await this.submit.click();
+  async goto() {
+    await super.goto();
+  }
+
+  async login(userKey = 'standard') {
+    const user = users[userKey];
+    await this.page.fill(loginLocators.usernameInput, user.username);
+    await this.page.fill(loginLocators.passwordInput, user.password);
+    await this.page.click(loginLocators.loginButton);
   }
 }

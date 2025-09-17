@@ -1,8 +1,16 @@
 import { request } from '@playwright/test';
 
-export default class ApiClient {
-  constructor(baseURL) {
-    this.baseURL = baseURL;
+export class ApiClient {
+  /** @param {import('@playwright/test').BrowserContext.request} request */
+  constructor(request, baseUrl = Env.apiBaseUrl) {
+    this.request = request;
+    this.baseUrl = baseUrl.replace(/\/$/, '');
+    this.header = {
+        'headers': {
+        'Content-Type': 'application/json',
+        'x-api-key': Env.apiKey
+      }
+    }
   }
 
   async get(endpoint) {

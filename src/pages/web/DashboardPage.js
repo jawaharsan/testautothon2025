@@ -1,12 +1,19 @@
 import { BasePage } from './BasePage';
+import { loginLocators } from '../../locators/web/login.locators.js';
+import { users } from '../../data/users.data.js';
 
 export class DashboardPage extends BasePage {
     constructor(page) {
       super(page);
-      this.greeting = page.locator('.app_logo'); // visible on successful login
     }
     async assertLoaded(expect) {
-      await expect(this.greeting).toBeVisible();
+      await expect(this.page.locator(loginLocators.greeting)).toBeVisible();
+    }
+    async assertLockedUser(expect) {
+      await expect(this.page.locator(loginLocators.errorMessage)).toContainText(users.errormsgLocked);
+    }    
+    async assertInvalidUser(expect) {
+      await expect(this.page.locator(loginLocators.errorMessage)).toContainText(users.errormsgInvalid);
     }
   }
   

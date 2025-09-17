@@ -1,10 +1,10 @@
 import { BaseScreen } from './BaseScreen.js';
 
 export class LoginScreen extends BaseScreen {
-  get username() { return $('~username'); }
-  get password() { return $('~password'); }
-  get loginBtn() { return $('~loginBtn'); }
-  get greeting() { return $('~greeting'); }
+  get username() { return this.driver.$('~username'); }
+  get password() { return this.driver.$('~password'); }
+  get loginBtn() { return this.driver.$('~loginBtn'); }
+  get greeting() { return this.driver.$('~greeting'); }
 
   async login(user, pass) {
     await this.waitFor(this.username);
