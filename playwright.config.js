@@ -21,6 +21,12 @@ export default defineConfig({
     video: 'retain-on-failure',
     trace: 'on-first-retry'
   },
+
+  reporter: [['html']],
+    use: {
+      trace: 'on-first-retry', // or 'on', to always record
+    },
+
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
     // { name: 'firefox', use: { ...devices['Desktop Firefox'] } },

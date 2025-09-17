@@ -1,17 +1,17 @@
 import { request } from '@playwright/test';
+import dotenv from 'dotenv';
+
+// Load environment variables from .env
+dotenv.config();
 
 export class ApiClient {
   /** @param {import('@playwright/test').BrowserContext.request} request */
-  constructor(request, baseUrl = Env.apiBaseUrl) {
-    this.request = request;
-    this.baseUrl = baseUrl.replace(/\/$/, '');
-    this.header = {
-        'headers': {
-        'Content-Type': 'application/json',
-        'x-api-key': Env.apiKey
-      }
-    }
-  }
+ constructor(baseURL = process.env.API_BASE_URL) {
+     if (!baseURL) {
+       throw new Error('❌ BASE_URL is not defined in environment variables');
+     }
+     this.baseURL = baseURL;
+   }
 
   async get(endpoint) {
     const requestContext = await request.newContext();
@@ -41,3 +41,5 @@ export class ApiClient {
     return response;
   }
 }
+
+export default ApiClient;
