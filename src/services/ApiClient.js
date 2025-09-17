@@ -1,22 +1,35 @@
-import { Env } from '../config/env.js';
+import { request } from '@playwright/test';
 
-export class ApiClient {
-  /** @param {import('@playwright/test').APIRequestContext} request */
-  constructor(request, baseUrl = Env.apiBaseUrl) {
-    this.request = request;
-    this.baseUrl = baseUrl.replace(/\/$/, '');
+export default class ApiClient {
+  constructor(baseURL) {
+    this.baseURL = baseURL;
   }
 
-  async get(path, opts = {}) {
-    return this.request.get(`${this.baseUrl}${path}`, opts);
+  async get(endpoint) {
+    const requestContext = await request.newContext();
+    const response = await requestContext.get(`${this.baseURL}${endpoint}`);
+    return response;
   }
-  async post(path, data, opts = {}) {
-    return this.request.post(`${this.baseUrl}${path}`, { ...opts, data });
+
+  async post(endpoint, data) {
+    const requestContext = await request.newContext();
+    const response = await requestContext.post(`${this.baseURL}${endpoint}`, {
+      data,
+    });
+    return response;
   }
-  async put(path, data, opts = {}) {
-    return this.request.put(`${this.baseUrl}${path}`, { ...opts, data });
+
+  async put(endpoint, data) {
+    const requestContext = await request.newContext();
+    const response = await requestContext.put(`${this.baseURL}${endpoint}`, {
+      data,
+    });
+    return response;
   }
-  async del(path, opts = {}) {
-    return this.request.delete(`${this.baseUrl}${path}`, opts);
+
+  async delete(endpoint) {
+    const requestContext = await request.newContext();
+    const response = await requestContext.delete(`${this.baseURL}${endpoint}`);
+    return response;
   }
 }
